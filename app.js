@@ -1,22 +1,49 @@
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 
 const app = express();
 const port = 3000;
 
+// menggunakan ejs
+
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+
 app.get("/", (req, res) => {
-	// res.send("Hello World");
-	// res.json({ nama: "Nursandy Ihksan", email: "sandy@gmail.com", nohp: "123" });
-	res.sendFile("./index.html", { root: __dirname });
+	const mahasiswa = [
+		{
+			nama: "Nursandy Ihksan",
+			email: "sandy@gmail.com",
+		},
+		{
+			nama: "Azhi Muahnaf Rais",
+			email: "azhi@gmail.com",
+		},
+		{
+			nama: "Udin",
+			email: "udin@gmail.com",
+		},
+	];
+	res.render("index", {
+		layout: "layouts/main-layout",
+		nama: "Nursandy Ihksan",
+		title: "Home",
+		mahasiswa,
+	});
 });
 
 app.get("/about", (req, res) => {
-	// res.send("Halaman About");
-	res.sendFile("./about.html", { root: __dirname });
+	res.render("about", {
+		layout: "layouts/main-layout",
+		title: "Halaman About",
+	});
 });
 
 app.get("/contact", (req, res) => {
-	// res.send("Halaman Contact");
-	res.sendFile("./contact.html", { root: __dirname });
+	res.render("contact", {
+		layout: "layouts/main-layout",
+		title: "Halaman Contact",
+	});
 });
 
 app.get("/product/:id", (req, res) => {
